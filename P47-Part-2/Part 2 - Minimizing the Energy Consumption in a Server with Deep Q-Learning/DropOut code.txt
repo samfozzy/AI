@@ -1,0 +1,68 @@
+Extra: Dropout
+Hi guys,
+
+I thought it would be valuable for you to even add one more powerful technique in your toolkit: Dropout
+
+Dropout is a regularization technique that prevents overfitting. It simply consists of deactivating a certain rate of random neurones 
+during each step of forward & back propagation. That way, not all the neurones learn the same way, thus preventing the neural network 
+from overfitting the training data.
+
+Here is how you implement Dropout:
+
+First, go into your brain.py implementation file.
+
+Then inside, add Dropout in the import from keras.layers:
+from keras.layers import Input, Dense, Dropout
+
+Then, activate Dropout in the first hidden layer x, with a rate of 0.1, meaning that 10% of the neurones will be randomly deactivated:
+x = Dropout(rate = 0.1)(x)
+
+And finally, activate Dropout in the second hidden layer y, with a rate of 0.1, meaning that 10% of the neurones will be randomly deactivated:
+y = Dropout(rate = 0.1)(y)
+
+Congratulations! You have implemented Dropout. It was very simple, once again thanks to Keras.
+
+Below is the whole new brain.py implementation with Dropout:
+
+# Artificial Intelligence for Business - Case Study 2
+# Building the Brain
+ 
+# Importing the libraries
+from keras.layers import Input, Dense, Dropout
+from keras.models import Model
+from keras.optimizers import Adam
+ 
+# BUILDING THE BRAIN
+ 
+class Brain(object):
+    
+    # BUILDING A FULLY CONNECTED NEURAL NETWORK DIRECTLY INSIDE THE INIT METHOD
+    
+    def __init__(self, learning_rate = 0.001, number_actions = 5):
+        self.learning_rate = learning_rate
+        
+        # BUILDIND THE INPUT LAYER COMPOSED OF THE INPUT STATE
+        states = Input(shape = (3,))
+        
+        # BUILDING THE FIRST FULLY CONNECTED HIDDEN LAYER WITH DROPOUT ACTIVATED
+        x = Dense(units = 64, activation = 'sigmoid')(states)
+        x = Dropout(rate = 0.1)(x)
+        
+        # BUILDING THE SECOND FULLY CONNECTED HIDDEN LAYER WITH DROPOUT ACTIVATED
+        y = Dense(units = 32, activation = 'sigmoid')(x)
+        y = Dropout(rate = 0.1)(y)
+        
+        # BUILDING THE OUTPUT LAYER, FULLY CONNECTED TO THE LAST HIDDEN LAYER
+        q_values = Dense(units = number_actions, activation = 'softmax')(y)
+        
+        # ASSEMBLING THE FULL ARCHITECTURE INSIDE A MODEL OBJECT
+        self.model = Model(inputs = states, outputs = q_values)
+        
+        # COMPILING THE MODEL WITH A MEAN-SQUARED ERROR LOSS AND A CHOSEN OPTIMIZER
+        self.model.compile(loss = 'mse', optimizer = Adam(lr = learning_rate))
+I tested the training with Early Stopping and Dropout activated, and then after running the 1-year simulation, I obtained the following results:
+
+
+We still get excellent results, very close to the ones resulting from Early Stopping without Dropout.
+
+Congratulations again for completing this Master Case Study! Now let's all take a good break, and let's smash Part 3 - Maximizing the Revenues.

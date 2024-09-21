@@ -1,0 +1,20 @@
+Homework Instruction
+Here is the Practical Activity for this Part 2:
+
+Training Artificial Intelligence solutions can be very costly, especially if you are training them for many servers in several data centers. 
+Hence we must absolutely optimize the training time of these AIs. One solution for this is Early Stopping. It consists of stopping the training 
+if the performance is not improved after a certain period of time (e.g. after a certain number of epochs). So that raises the following question:
+
+How to assess the improvement of the performance?
+
+There are two ways to do it:
+
+Checking if the total reward accumulated over the full period of 5 months (= 1 training epoch) is still increasing, after a chosen number of epoch
+
+Checking if the loss is still getting reduced, by at least a chosen percentage threshold, over the epochs
+
+Your mission is to implement this Early Stopping technique using either 1. or 2. Then together we will implement 1.
+
+You will get the solution in the next tutorial, but before please try hard to tackle this challenge. Practice really does make perfect.
+
+Good luck!
